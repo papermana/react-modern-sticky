@@ -1,6 +1,6 @@
 {
-  "name": "react-native-sticky-example",
-  "homepage": "https://papermana.github.io/react-native-sticky",
+  "name": "react-modern-sticky-example",
+  "homepage": "https://papermana.github.io/react-modern-sticky",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -10,7 +10,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-native-sticky": "link:..",
+    "react-modern-sticky": "link:..",
     "react-scripts": "^1.1.4"
   },
   "scripts": {

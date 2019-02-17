@@ -1,5 +1,5 @@
 import React from 'react';
-import Sticky from 'react-native-sticky';
+import Sticky from 'react-modern-sticky';
 import cx from 'classnames';
 
 import usersGroupedByName from './usersGroupedByName';

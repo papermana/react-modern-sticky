@@ -1,13 +1,13 @@
-# react-native-sticky
+# react-modern-sticky
 
-> 
+>
 
-[![NPM](https://img.shields.io/npm/v/react-native-sticky.svg)](https://www.npmjs.com/package/react-native-sticky) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-modern-sticky.svg)](https://www.npmjs.com/package/react-modern-sticky) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save react-native-sticky
+npm install --save react-modern-sticky
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install --save react-native-sticky
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-native-sticky'
+import MyComponent from 'react-modern-sticky'
 
 class Example extends Component {
   render () {

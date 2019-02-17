@@ -1,6 +1,6 @@
 {
-  "short_name": "react-native-sticky",
-  "name": "react-native-sticky",
+  "short_name": "react-modern-sticky",
+  "name": "react-modern-sticky",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",

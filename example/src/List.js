@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Sticky from 'react-native-sticky';
+import Sticky from 'react-modern-sticky';
 
 const List = ({ children, getKey, header, values }) => (
   <div>

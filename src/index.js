@@ -12,13 +12,17 @@ class Sticky extends Component {
   sticky = createRef();
 
   componentDidMount() {
-    this.observer = new IntersectionObserver(this.observerCallback);
-    this.observer.observe(this.sentinel.current);
-    this.sentinelStyle = this.getSentinelStyle();
+    if (window.IntersectionObserver) {
+      this.observer = new IntersectionObserver(this.observerCallback);
+      this.observer.observe(this.sentinel.current);
+      this.sentinelStyle = this.getSentinelStyle();
+    }
   }
 
   componentWillUnmount() {
-    this.observer.disconnect();
+    if (window.IntersectionObserver) {
+      this.observer.disconnect();
+    }
   }
 
   observerCallback = (entries) => {

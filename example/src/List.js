@@ -8,7 +8,9 @@ const List = ({ children, getKey, header, values }) => (
       className="list-header-wrapper"
       stuckClassName="list-header-wrapper--stuck"
     >
-      <div className="list-header">{header}</div>
+      <div className="list-header">
+        {header}
+      </div>
     </Sticky>
     <div className="list">
       {values.map(value => (

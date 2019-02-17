@@ -10,7 +10,9 @@ export default () => (
   <div>
     <Sticky className="header-wrapper">
       {({ isStuck }) => (
-        <h1 className={cx('header', isStuck && 'header--stuck')}>Contacts</h1>
+        <h1 className={cx('header', isStuck && 'header--stuck')}>
+Contacts
+        </h1>
       )}
     </Sticky>
     <div className="header-shadow" />
@@ -26,7 +28,9 @@ export default () => (
           {user => (
             <div className="user">
               <Avatar gender={user.gender} />
-              <span className="name">{user.name}</span>
+              <span className="name">
+                {user.name}
+              </span>
             </div>
           )}
         </List>

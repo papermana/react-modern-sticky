@@ -5,3 +5,27 @@ body {
 .wrapper {
   height: 10000px;
 }
+
+/* Testing offset */
+
+:root {
+  --header-height: 50px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: var(--header-height);
+  width: 100%;
+  background-color: aqua;
+}
+
+.inner-wrapper {
+  margin-top: calc(var(--header-height) + 50px);
+  height: 100%;
+}
+
+.sticky-classname--with-offset {
+  top: var(--header-height);
+}

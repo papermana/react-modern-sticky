@@ -15,6 +15,7 @@
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
+    "cypress:open": "cypress open",
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",
@@ -35,6 +36,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "cross-env": "^5.1.4",
+    "cypress": "^3.1.5",
     "eslint": "^5.0.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.13.0",

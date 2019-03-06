@@ -8,6 +8,14 @@ Traditionally, sticky headers were achieved by watching scroll events. This crea
 
 `react-modern-sticky` is a simple wrapper that uses `position: sticky` and, additionally, watches for when the sticky mode changes by utilizing the `IntersectionObserver` API for maximum performance.
 
+- [Browser support](#browser-support)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Basic usage](#basic-usage)
+  - [Offset](#offset)
+- [Thanks](#thanks)
+- [License](#license)
+
 ## Browser support
 
 Both `position: sticky;` and the `IntersectionObserver` are relatively recent additions and are not supported by every browser.

@@ -13,6 +13,7 @@ Traditionally, sticky headers were achieved by watching scroll events. This crea
 - [Usage](#usage)
   - [Basic usage](#basic-usage)
   - [Offset](#offset)
+  - [Callback](#callback)
 - [Thanks](#thanks)
 - [License](#license)
 
@@ -92,6 +93,25 @@ const Example = () => (
     I'll be offset 50px from the top of the screen when I'm stuck
   </Sticky>
 );
+```
+
+### Callback
+
+You can optionally add an `onStuck` callback. `Sticky` is not a controlled element, and in most situations you will not need this. However, sometimes you may want the parent element to know about the "stuck" state of its descendant.
+
+The function passed to `onStuck` will be called with true or false depending on whether the element is currently stuck.
+
+```jsx
+const Example = () => {
+  const [isStuck, setIsStuck] = useState(false);
+
+  return (
+    <>
+      {isStuck ? "It's stuck" : "It's not stuck"}
+      <Sticky onStuck={setIsStuck}>Some content</Sticky>
+    </>
+  );
+};
 ```
 
 ## Thanks

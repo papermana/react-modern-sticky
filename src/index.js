@@ -41,27 +41,37 @@ class Sticky extends Component {
   observerCallback = () => {
     const { top: sentinelStaticPos } = this.sentinelStatic.current.getBoundingClientRect();
     const { top: sentinelStickyPos } = this.sentinelSticky.current.getBoundingClientRect();
+    const { onStuck } = this.props;
 
-    if (sentinelStaticPos < 0 && sentinelStickyPos < 0) {
-      this.setState({
-        viewportTopEdgePosition:
-          VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER,
-      });
-    }
+    this.setState(
+      () => {
+        if (sentinelStaticPos < 0 && sentinelStickyPos < 0) {
+          return {
+            viewportTopEdgePosition:
+              VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER,
+          };
+        }
 
-    if (sentinelStaticPos < 0 && sentinelStickyPos >= 0) {
-      this.setState({
-        viewportTopEdgePosition:
-          VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER,
-      });
-    }
+        if (sentinelStaticPos < 0 && sentinelStickyPos >= 0) {
+          return {
+            viewportTopEdgePosition:
+              VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER,
+          };
+        }
 
-    if (sentinelStaticPos >= 0 && sentinelStickyPos > 0) {
-      this.setState({
-        viewportTopEdgePosition:
-          VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER,
-      });
-    }
+        if (sentinelStaticPos >= 0 && sentinelStickyPos > 0) {
+          return {
+            viewportTopEdgePosition:
+              VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER,
+          };
+        }
+
+        return null;
+      },
+      () => {
+        onStuck(this.getIsStuck());
+      },
+    );
   };
 
   getIsStuck = () => {
@@ -99,6 +109,7 @@ class Sticky extends Component {
       children,
       className,
       offset,
+      onStuck,
       stuckClassName,
       ...props
     } = this.props;
@@ -133,12 +144,14 @@ Sticky.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
   className: PropTypes.string,
   offset: PropTypes.number,
+  onStuck: PropTypes.func,
   stuckClassName: PropTypes.string,
 };
 
 Sticky.defaultProps = {
   className: '',
   offset: null,
+  onStuck: () => {},
   stuckClassName: '',
 };
 

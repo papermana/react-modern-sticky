@@ -7,6 +7,7 @@ import FunctionAsChild from './FunctionAsChild';
 import Offset from './Offset';
 import OffsetViaProp from './OffsetViaProp';
 import UnstuckWhenOutOfView from './UnstuckWhenOutOfView';
+import Callback from './Callback';
 import './index.css';
 
 const App = () => (
@@ -20,6 +21,7 @@ const App = () => (
         path="/unstuck-when-out-of-view"
         component={UnstuckWhenOutOfView}
       />
+      <Route path="/callback" component={Callback} />
     </div>
   </Router>
 );

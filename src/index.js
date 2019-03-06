@@ -47,7 +47,7 @@ class Sticky extends Component {
     const stickyStyles = getComputedStyle(this.sticky.current);
     const top = parseInt(stickyStyles.top, 10);
 
-    return { top: `${-top}px` };
+    return { top: -top };
   };
 
   render() {

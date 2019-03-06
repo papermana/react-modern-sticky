@@ -58,11 +58,23 @@ const Example = () => (
 
 ### Offset
 
-You can set the CSS `top` property for the `Sticky` element if you need it to be offset from the top of the screen. A common use case for this would be if you have a fixed header and want your sticky sub-header to appear below it.
+You can set a vertical offset for the `Sticky` element if you need it to not be stuck at the top of the screen. A common use case for this would be if you have a fixed header and want your sticky sub-header to appear below it.
+
+You can do this simply by passing a prop:
+
+```jsx
+const Example = () => (
+  <Sticky offset={50}>
+    I'll be offset 50px from the top of the screen when I'm stuck
+  </Sticky>;
+);
+```
+
+Alternatively, if you want to keep all your values in CSS, you can just apply the `top` property. This may require the use of `!important` to override the default style for `Sticky`, depending on whether your CSS or libraries' CSS gets loaded first.
 
 ```css
 .sticky {
-  top: 50px !important;
+  top: 50px;
 }
 ```
 

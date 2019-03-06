@@ -1,6 +1,6 @@
-describe('Sticky offset from the top', () => {
+const test = ({ route }) => {
   it('is not stuck until window is scrolled past the selected offset', () => {
-    cy.visit('/offset');
+    cy.visit(route);
 
     cy.contains('is not stuck');
 
@@ -9,5 +9,15 @@ describe('Sticky offset from the top', () => {
 
     cy.scrollTo(0, 51);
     cy.contains('is stuck');
+  });
+};
+
+describe('Sticky offset from the top', () => {
+  describe('using CSS', () => {
+    test({ route: '/offset' });
+  });
+
+  describe('using prop', () => {
+    test({ route: '/offset-via-prop' });
   });
 });

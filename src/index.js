@@ -44,14 +44,32 @@ class Sticky extends Component {
   };
 
   getSentinelStyle = () => {
+    const { offset } = this.props;
+
+    if (offset) {
+      return { top: -offset };
+    }
+
     const stickyStyles = getComputedStyle(this.sticky.current);
     const top = parseInt(stickyStyles.top, 10);
 
     return { top: -top };
   };
 
+  getStickyStyle = () => {
+    const { offset } = this.props;
+
+    return { ...(offset && { top: offset }) };
+  };
+
   render() {
-    const { children, className, stuckClassName, ...props } = this.props;
+    const {
+      children,
+      className,
+      offset,
+      stuckClassName,
+      ...props
+    } = this.props;
     const { isStuck } = this.state;
 
     return (
@@ -63,6 +81,7 @@ class Sticky extends Component {
         />
         <div
           ref={this.sticky}
+          style={this.getStickyStyle()}
           className={cx(styles.sticky, className, { [stuckClassName]: isStuck })}
           {...props}
         >
@@ -76,11 +95,14 @@ class Sticky extends Component {
 Sticky.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,
   className: PropTypes.string,
+  offset: PropTypes.number,
   stuckClassName: PropTypes.string,
 };
 
 Sticky.defaultProps = {
   className: '',
+
+  offset: null,
   stuckClassName: '',
 };
 

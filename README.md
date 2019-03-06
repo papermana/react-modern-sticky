@@ -36,7 +36,7 @@ import Sticky from "react-modern-sticky";
 const Example = () => <Sticky>My sticky content.</Sticky>;
 ```
 
-`Sticky` renders a `div`, and it will accept any usual `div` props, including `className`. You can additionally pass `stuckClassName`, which will be added whenever the element sticks to the top of the screen.
+`Sticky` renders a `div`, and it will accept any usual `div` props, including `className`. (The one exception is `style`, which will be ignored.) You can additionally pass `stuckClassName`, which will be added whenever the element sticks to the top of the screen.
 
 ```jsx
 const Example = () => (

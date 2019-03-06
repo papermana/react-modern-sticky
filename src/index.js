@@ -80,10 +80,10 @@ class Sticky extends Component {
           style={this.sentinelStyle}
         />
         <div
+          {...props}
           ref={this.sticky}
           style={this.getStickyStyle()}
           className={cx(styles.sticky, className, { [stuckClassName]: isStuck })}
-          {...props}
         >
           {children instanceof Function ? children({ isStuck }) : children}
         </div>

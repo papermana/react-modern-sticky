@@ -36,4 +36,14 @@ describe('Basic behavior', () => {
       'sticky-classname--stuck',
     );
   });
+
+  it('becomes unstuck when scrolled out of view', () => {
+    cy.visit('/unstuck-when-out-of-view');
+
+    cy.scrollTo(0, 500);
+    cy.contains('is stuck');
+
+    cy.scrollTo(0, 1000);
+    cy.contains('is not stuck');
+  });
 });

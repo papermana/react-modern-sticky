@@ -29,3 +29,9 @@ body {
 .offset__sticky-classname {
   top: var(--header-height);
 }
+
+/* Testing whether element gets unstuck when out of view */
+
+.unstuck-when-out-of-view__inner-wrapper {
+  height: 500px;
+}

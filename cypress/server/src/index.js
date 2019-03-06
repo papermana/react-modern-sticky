@@ -6,6 +6,7 @@ import BasicBehavior from './BasicBehavior';
 import FunctionAsChild from './FunctionAsChild';
 import Offset from './Offset';
 import OffsetViaProp from './OffsetViaProp';
+import UnstuckWhenOutOfView from './UnstuckWhenOutOfView';
 import './index.css';
 
 const App = () => (
@@ -15,6 +16,10 @@ const App = () => (
       <Route path="/function-as-child" component={FunctionAsChild} />
       <Route path="/offset" component={Offset} />
       <Route path="/offset-via-prop" component={OffsetViaProp} />
+      <Route
+        path="/unstuck-when-out-of-view"
+        component={UnstuckWhenOutOfView}
+      />
     </div>
   </Router>
 );

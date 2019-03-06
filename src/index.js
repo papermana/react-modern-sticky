@@ -4,18 +4,31 @@ import cx from 'classnames';
 
 import styles from './styles.css';
 
-class Sticky extends Component {
-  state = { isStuck: false };
+const VIEWPORT_TOP_EDGE_POSITIONS = {
+  NULL: 'NULL',
+  ABOVE_STICKY_CONTAINER: 'ABOVE_STICKY_CONTAINER',
+  WITHIN_STICKY_CONTAINER: 'WITHIN_STICKY_CONTAINER',
+  BELOW_STICKY_CONTAINER: 'BELOW_STICKY_CONTAINER',
+};
 
-  sentinel = createRef();
+class Sticky extends Component {
+  state = { viewportTopEdgePosition: VIEWPORT_TOP_EDGE_POSITIONS.NULL };
+
+  sentinelStatic = createRef();
+
+  sentinelSticky = createRef();
 
   sticky = createRef();
 
+  offset = 0;
+
   componentDidMount() {
     if (window.IntersectionObserver) {
+      this.offset = this.getOffset();
+
       this.observer = new IntersectionObserver(this.observerCallback);
-      this.observer.observe(this.sentinel.current);
-      this.sentinelStyle = this.getSentinelStyle();
+      this.observer.observe(this.sentinelStatic.current);
+      this.observer.observe(this.sentinelSticky.current);
     }
   }
 
@@ -25,35 +38,54 @@ class Sticky extends Component {
     }
   }
 
-  observerCallback = (entries) => {
-    entries.forEach((entry) => {
-      const targetInfo = entry.boundingClientRect;
-      const rootBoundsInfo = entry.rootBounds;
+  observerCallback = () => {
+    const { top: sentinelStaticPos } = this.sentinelStatic.current.getBoundingClientRect();
+    const { top: sentinelStickyPos } = this.sentinelSticky.current.getBoundingClientRect();
 
-      if (targetInfo.bottom < rootBoundsInfo.top) {
-        this.setState({ isStuck: true });
-      }
+    if (sentinelStaticPos < 0 && sentinelStickyPos < 0) {
+      this.setState({
+        viewportTopEdgePosition:
+          VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER,
+      });
+    }
 
-      if (
-        targetInfo.bottom >= rootBoundsInfo.top
-        && targetInfo.bottom < rootBoundsInfo.bottom
-      ) {
-        this.setState({ isStuck: false });
-      }
-    });
+    if (sentinelStaticPos < 0 && sentinelStickyPos >= 0) {
+      this.setState({
+        viewportTopEdgePosition:
+          VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER,
+      });
+    }
+
+    if (sentinelStaticPos >= 0 && sentinelStickyPos > 0) {
+      this.setState({
+        viewportTopEdgePosition:
+          VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER,
+      });
+    }
   };
 
-  getSentinelStyle = () => {
+  getIsStuck = () => {
+    const { viewportTopEdgePosition } = this.state;
+
+    return {
+      [VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER]: false,
+      [VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER]: true,
+      [VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER]: false,
+      [VIEWPORT_TOP_EDGE_POSITIONS.NULL]: false,
+    }[viewportTopEdgePosition];
+  };
+
+  getOffset = () => {
     const { offset } = this.props;
 
     if (offset) {
-      return { top: -offset };
+      return offset;
     }
 
     const stickyStyles = getComputedStyle(this.sticky.current);
     const top = parseInt(stickyStyles.top, 10);
 
-    return { top: -top };
+    return top;
   };
 
   getStickyStyle = () => {
@@ -70,14 +102,14 @@ class Sticky extends Component {
       stuckClassName,
       ...props
     } = this.props;
-    const { isStuck } = this.state;
+    const isStuck = this.getIsStuck();
 
     return (
       <Fragment>
         <div
-          ref={this.sentinel}
+          ref={this.sentinelStatic}
           className={styles.sentinel}
-          style={this.sentinelStyle}
+          style={{ top: -this.offset }}
         />
         <div
           {...props}
@@ -86,6 +118,11 @@ class Sticky extends Component {
           className={cx(styles.sticky, className, { [stuckClassName]: isStuck })}
         >
           {children instanceof Function ? children({ isStuck }) : children}
+          <div
+            ref={this.sentinelSticky}
+            style={{ top: -this.offset }}
+            className={styles.sentinel}
+          />
         </div>
       </Fragment>
     );
@@ -101,7 +138,6 @@ Sticky.propTypes = {
 
 Sticky.defaultProps = {
   className: '',
-
   offset: null,
   stuckClassName: '',
 };

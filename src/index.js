@@ -98,12 +98,6 @@ class Sticky extends Component {
     return top;
   };
 
-  getStickyStyle = () => {
-    const { offset } = this.props;
-
-    return { ...(offset && { top: offset }) };
-  };
-
   render() {
     const {
       children,
@@ -125,7 +119,7 @@ class Sticky extends Component {
         <div
           {...props}
           ref={this.sticky}
-          style={this.getStickyStyle()}
+          style={{ ...(offset && { top: offset }) }}
           className={cx(styles.sticky, className, { [stuckClassName]: isStuck })}
         >
           {children instanceof Function ? children({ isStuck }) : children}

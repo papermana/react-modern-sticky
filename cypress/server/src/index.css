@@ -12,7 +12,7 @@ body {
   --header-height: 50px;
 }
 
-.header {
+.offset__header {
   position: fixed;
   top: 0;
   left: 0;
@@ -21,11 +21,11 @@ body {
   background-color: aqua;
 }
 
-.inner-wrapper {
+.offset__inner-wrapper {
   margin-top: calc(var(--header-height) + 50px);
   height: 100%;
 }
 
-.sticky-classname--with-offset {
+.offset__sticky-classname {
   top: var(--header-height);
 }

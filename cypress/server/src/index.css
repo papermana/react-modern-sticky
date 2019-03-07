@@ -16,14 +16,14 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  height: var(--header-height);
   width: 100%;
+  height: var(--header-height);
   background-color: aqua;
 }
 
 .offset__inner-wrapper {
-  margin-top: calc(var(--header-height) + 50px);
   height: 100%;
+  margin-top: calc(var(--header-height) + 50px);
 }
 
 .offset__sticky-classname {

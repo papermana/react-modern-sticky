@@ -4,7 +4,8 @@ describe('Basic behavior', () => {
 
     cy.contains('Sticky content')
       .should('have.class', 'sticky-classname')
-      .should('have.attr', 'data-foo', 'some-data-attr');
+      .should('have.attr', 'data-foo', 'some-data-attr')
+      .should('have.css', 'background-color', 'rgb(0, 0, 255)');
   });
 
   it('is not sticky at start', () => {

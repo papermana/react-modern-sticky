@@ -7,6 +7,7 @@ const BasicBehavior = () => (
       className="sticky-classname"
       stuckClassName="sticky-classname--stuck"
       data-foo="some-data-attr"
+      style={{ backgroundColor: 'rgb(0, 0, 255)' }}
     >
       Sticky content
     </Sticky>

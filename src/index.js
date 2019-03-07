@@ -105,6 +105,7 @@ class Sticky extends Component {
       offset,
       onStuck,
       stuckClassName,
+      style,
       ...props
     } = this.props;
     const isStuck = this.getIsStuck();
@@ -119,7 +120,7 @@ class Sticky extends Component {
         <div
           {...props}
           ref={this.sticky}
-          style={{ ...(offset && { top: offset }) }}
+          style={{ ...style, ...(offset && { top: offset }) }}
           className={cx(styles.sticky, className, { [stuckClassName]: isStuck })}
         >
           {children instanceof Function ? children({ isStuck }) : children}
@@ -140,6 +141,7 @@ Sticky.propTypes = {
   offset: PropTypes.number,
   onStuck: PropTypes.func,
   stuckClassName: PropTypes.string,
+  style: PropTypes.objectOf(PropTypes.any),
 };
 
 Sticky.defaultProps = {
@@ -147,6 +149,7 @@ Sticky.defaultProps = {
   offset: null,
   onStuck: () => {},
   stuckClassName: '',
+  style: null,
 };
 
 export default Sticky;

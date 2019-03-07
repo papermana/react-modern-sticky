@@ -19,10 +19,15 @@ Traditionally, making headers sticky was achieved by watching scroll events. Thi
 
 ## Browser support
 
-Both `position: sticky;` and the `IntersectionObserver` are relatively recent additions and are not supported by every browser.
+At the time of writing this, [support for `position: sticky;`](https://caniuse.com/#feat=css-sticky) is fairly good.
 
-- [`position: sticky;`](https://caniuse.com/#feat=css-sticky) — at the time of writing, support is fairly solid.
-- [`IntersectionObserver`](https://caniuse.com/#feat=intersectionobserver) — is not supported on Safari 12.
+However, `IntersectionObserver` is still a somewhat recent addition and is not supported by every browser; notably, by Safari 12.
+
+It is recommended to use the polyfill [`intersection-observer`](https://www.npmjs.com/package/intersection-observer) for now. It's enough to just add it to your `package.json` and then put the following somewhere in the code (like in `index.js`):
+
+```js
+import "intersection-observer";
+```
 
 ## Installation
 

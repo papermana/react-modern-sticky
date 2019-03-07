@@ -15,9 +15,8 @@ const getGender = gender => ({
 
 const Avatar = ({ gender }) => (
   <img
-    src={`https://randomuser.me/api/portraits/${getGender(
-      gender,
-    )}/${getId()}.jpg`}
+    src={`https://randomuser.me/api/portraits/${getGender(gender)}/${getId()
+      % 100}.jpg`}
     alt=""
     className="avatar"
   />

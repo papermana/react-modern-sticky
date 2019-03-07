@@ -8,10 +8,11 @@ const getId = (() => {
   return () => i++;
 })();
 
-const getGender = gender => ({
-  male: 'men',
-  female: 'women',
-}[gender]);
+const getGender = gender =>
+  ({
+    male: 'men',
+    female: 'women',
+  }[gender]);
 
 const Avatar = ({ gender }) => (
   <img

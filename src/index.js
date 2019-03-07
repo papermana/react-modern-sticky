@@ -39,8 +39,12 @@ class Sticky extends Component {
   }
 
   observerCallback = () => {
-    const { top: sentinelStaticPos } = this.sentinelStatic.current.getBoundingClientRect();
-    const { top: sentinelStickyPos } = this.sentinelSticky.current.getBoundingClientRect();
+    const {
+      top: sentinelStaticPos,
+    } = this.sentinelStatic.current.getBoundingClientRect();
+    const {
+      top: sentinelStickyPos,
+    } = this.sentinelSticky.current.getBoundingClientRect();
     const { onStuck } = this.props;
 
     this.setState(
@@ -121,7 +125,9 @@ class Sticky extends Component {
           {...props}
           ref={this.sticky}
           style={{ ...style, ...(offset && { top: offset }) }}
-          className={cx(styles.sticky, className, { [stuckClassName]: isStuck })}
+          className={cx(styles.sticky, className, {
+            [stuckClassName]: isStuck,
+          })}
         >
           {children instanceof Function ? children({ isStuck }) : children}
           <div

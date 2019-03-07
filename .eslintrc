@@ -3,11 +3,13 @@
   "extends": ["airbnb"],
   "env": { "browser": true },
   "rules": {
-    "max-len": "off",
+    "max-len": ["error", 80],
+    "implicit-arrow-linebreak": "off",
     "object-curly-newline": [
       "warn",
       {
-        "multiline": true
+        "multiline": true,
+        "consistent": true
       }
     ],
     "react/jsx-filename-extension": "off"

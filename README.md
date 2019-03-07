@@ -4,9 +4,9 @@
 
 [![NPM](https://img.shields.io/npm/v/react-modern-sticky.svg)](https://www.npmjs.com/package/react-modern-sticky)
 
-Traditionally, sticky headers were achieved by watching scroll events. This creates some performance problems. Thankfully, there is now a native way of doing this in CSS: `position: sticky;`. Unfortunately, there's no way to tell when an element switches between "stuck" and "unstuck" modes.
+Traditionally, making headers sticky was achieved by watching scroll events. This creates some performance problems. Thankfully, there is now a native way of doing this in CSS: `position: sticky;`. However, there's no way to tell when an element switches between "stuck" and "unstuck" modes.
 
-`react-modern-sticky` is a simple wrapper that uses `position: sticky` and, additionally, watches for when the sticky mode changes by utilizing the `IntersectionObserver` API for maximum performance.
+`react-modern-sticky` is a simple component that uses `position: sticky` and, additionally, watches for when the sticky mode changes. It does so by utilizing the `IntersectionObserver` API for maximum performance.
 
 - [Browser support](#browser-support)
 - [Installation](#installation)
@@ -67,37 +67,37 @@ const Example = () => (
 
 ### Offset
 
-You can set a vertical offset for the `Sticky` element if you need it to not be stuck at the top of the screen. A common use case for this would be if you have a fixed header and want your sticky sub-header to appear below it.
+You can set a vertical offset for the `Sticky` element if you need it to not be stuck at the very top of the screen. A common use case for this would be if you have a fixed header, and want your sticky sub-header to appear below it.
 
 You can do this simply by passing a prop:
 
 ```jsx
 const Example = () => (
   <Sticky offset={50}>
-    I'll be offset 50px from the top of the screen when I'm stuck
+    I'll be offset 50px from the top of the screen when I'm stuck.
   </Sticky>;
 );
 ```
 
-Alternatively, if you want to keep all your values in CSS, you can just apply the `top` property. This may require the use of `!important` to override the default style for `Sticky`, depending on whether your CSS or libraries' CSS gets loaded first.
+Alternatively, if you want to keep all your styles in CSS, you can just apply the `top` property to the element. This may require the use of `!important` to override the default style for `Sticky`, depending on whether your CSS or libraries' CSS gets loaded first.
 
 ```css
 .sticky {
-  top: 50px;
+  top: 50px !important;
 }
 ```
 
 ```jsx
 const Example = () => (
   <Sticky className="sticky">
-    I'll be offset 50px from the top of the screen when I'm stuck
+    I'll be offset 50px from the top of the screen when I'm stuck.
   </Sticky>
 );
 ```
 
 ### Callback
 
-You can optionally add an `onStuck` callback. `Sticky` is not a controlled element, and in most situations you will not need this. However, sometimes you may want the parent element to know about the "stuck" state of its descendant.
+You can optionally add an `onStuck` callback. `Sticky` is not a controlled element, and in most situations you will not need this. However, sometimes you may want a component to know about the "stuck" state of one of its descendants.
 
 The function passed to `onStuck` will be called with true or false depending on whether the element is currently stuck.
 
@@ -107,8 +107,8 @@ const Example = () => {
 
   return (
     <>
-      {isStuck ? "It's stuck" : "It's not stuck"}
-      <Sticky onStuck={setIsStuck}>Some content</Sticky>
+      {isStuck ? "It's stuck." : "It's not stuck."}
+      <Sticky onStuck={setIsStuck}>Some content.</Sticky>
     </>
   );
 };

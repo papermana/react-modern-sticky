@@ -80,7 +80,7 @@ You can do this simply by passing a prop:
 const Example = () => (
   <Sticky offset={50}>
     I'll be offset 50px from the top of the screen when I'm stuck.
-  </Sticky>;
+  </Sticky>
 );
 ```
 

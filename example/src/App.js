@@ -24,7 +24,7 @@ export default () => {
             className={cx(
               'header',
               isStuck && 'header--stuck',
-              !lastSubheaderStuck && 'header--has-shadow',
+              isStuck && !lastSubheaderStuck && 'header--has-shadow',
             )}
           >
             Contacts

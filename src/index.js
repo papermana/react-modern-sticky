@@ -1,4 +1,4 @@
-import React, { Component, createRef, Fragment } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -11,135 +11,102 @@ const VIEWPORT_TOP_EDGE_POSITIONS = {
   BELOW_STICKY_CONTAINER: 'BELOW_STICKY_CONTAINER',
 };
 
-class Sticky extends Component {
-  state = { viewportTopEdgePosition: VIEWPORT_TOP_EDGE_POSITIONS.NULL };
+const getComputedTop = (el) => {
+  const stickyStyles = getComputedStyle(el);
+  const top = parseInt(stickyStyles.top, 10);
 
-  sentinelStatic = createRef();
+  return top;
+};
 
-  sentinelSticky = createRef();
+const getIsStuck = viewportTopEdgePosition =>
+  ({
+    [VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER]: false,
+    [VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER]: true,
+    [VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER]: false,
+    [VIEWPORT_TOP_EDGE_POSITIONS.NULL]: false,
+  }[viewportTopEdgePosition]);
 
-  sticky = createRef();
+const Sticky = ({
+  children,
+  className,
+  offset,
+  onStuck,
+  stuckClassName,
+  style,
+  ...props
+}) => {
+  const [viewportTopEdgePosition, setViewportTopEdgePosition] = useState(
+    VIEWPORT_TOP_EDGE_POSITIONS.NULL,
+  );
+  const sentinelStatic = useRef();
+  const sentinelSticky = useRef();
+  const sticky = useRef();
+  const actualOffset = useRef(0);
+  const isStuck = getIsStuck(viewportTopEdgePosition);
 
-  offset = 0;
+  useEffect(() => {
+    onStuck(isStuck);
+  }, [viewportTopEdgePosition]);
 
-  componentDidMount() {
-    if (window.IntersectionObserver) {
-      this.offset = this.getOffset();
+  useEffect(() => {
+    actualOffset.current = offset || getComputedTop(sticky.current);
 
-      this.observer = new IntersectionObserver(this.observerCallback);
-      this.observer.observe(this.sentinelStatic.current);
-      this.observer.observe(this.sentinelSticky.current);
-    }
-  }
+    const observer = new IntersectionObserver(() => {
+      const {
+        top: sentinelStaticPos,
+      } = sentinelStatic.current.getBoundingClientRect();
+      const {
+        top: sentinelStickyPos,
+      } = sentinelSticky.current.getBoundingClientRect();
 
-  componentWillUnmount() {
-    if (window.IntersectionObserver) {
-      this.observer.disconnect();
-    }
-  }
-
-  observerCallback = () => {
-    const {
-      top: sentinelStaticPos,
-    } = this.sentinelStatic.current.getBoundingClientRect();
-    const {
-      top: sentinelStickyPos,
-    } = this.sentinelSticky.current.getBoundingClientRect();
-    const { onStuck } = this.props;
-
-    this.setState(
-      () => {
+      setViewportTopEdgePosition(() => {
         if (sentinelStaticPos < 0 && sentinelStickyPos < 0) {
-          return {
-            viewportTopEdgePosition:
-              VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER,
-          };
+          return VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER;
         }
 
         if (sentinelStaticPos < 0 && sentinelStickyPos >= 0) {
-          return {
-            viewportTopEdgePosition:
-              VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER,
-          };
+          return VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER;
         }
 
         if (sentinelStaticPos >= 0 && sentinelStickyPos > 0) {
-          return {
-            viewportTopEdgePosition:
-              VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER,
-          };
+          return VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER;
         }
 
-        return null;
-      },
-      () => {
-        onStuck(this.getIsStuck());
-      },
-    );
-  };
+        return viewportTopEdgePosition;
+      });
+    });
 
-  getIsStuck = () => {
-    const { viewportTopEdgePosition } = this.state;
+    observer.observe(sentinelStatic.current);
+    observer.observe(sentinelSticky.current);
 
-    return {
-      [VIEWPORT_TOP_EDGE_POSITIONS.ABOVE_STICKY_CONTAINER]: false,
-      [VIEWPORT_TOP_EDGE_POSITIONS.WITHIN_STICKY_CONTAINER]: true,
-      [VIEWPORT_TOP_EDGE_POSITIONS.BELOW_STICKY_CONTAINER]: false,
-      [VIEWPORT_TOP_EDGE_POSITIONS.NULL]: false,
-    }[viewportTopEdgePosition];
-  };
+    return observer.disconnect;
+  }, []);
 
-  getOffset = () => {
-    const { offset } = this.props;
-
-    if (offset) {
-      return offset;
-    }
-
-    const stickyStyles = getComputedStyle(this.sticky.current);
-    const top = parseInt(stickyStyles.top, 10);
-
-    return top;
-  };
-
-  render() {
-    const {
-      children,
-      className,
-      offset,
-      onStuck,
-      stuckClassName,
-      style,
-      ...props
-    } = this.props;
-    const isStuck = this.getIsStuck();
-
-    return (
-      <Fragment>
+  return (
+    <Fragment>
+      <div
+        ref={sentinelStatic}
+        className={styles.sentinel}
+        style={{ top: -actualOffset }}
+      />
+      <div
+        {...props}
+        ref={sticky}
+        style={{ ...style, ...(offset && { top: offset }) }}
+        className={cx(styles.sticky, className, {
+          [stuckClassName]: isStuck,
+        })}
+      >
+        {children instanceof Function ? children({ isStuck }) : children}
         <div
-          ref={this.sentinelStatic}
+          ref={sentinelSticky}
+          style={{ top: -actualOffset }}
           className={styles.sentinel}
-          style={{ top: -this.offset }}
         />
-        <div
-          {...props}
-          ref={this.sticky}
-          style={{ ...style, ...(offset && { top: offset }) }}
-          className={cx(styles.sticky, className, {
-            [stuckClassName]: isStuck,
-          })}
-        >
-          {children instanceof Function ? children({ isStuck }) : children}
-          <div
-            ref={this.sentinelSticky}
-            style={{ top: -this.offset }}
-            className={styles.sentinel}
-          />
-        </div>
-      </Fragment>
-    );
-  }
-}
+      </div>
+    </Fragment>
+  );
+};
 
 Sticky.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.node]).isRequired,

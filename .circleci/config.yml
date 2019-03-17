@@ -31,4 +31,11 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # Run Cypress tests
+      - run: mkdir cypress-test-results
       - run: yarn cypress:ci
+      - store_test_results:
+          path: cypress-test-results
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots

@@ -6,14 +6,20 @@ import usersGroupedByName from './usersGroupedByName';
 import UsersList from './UsersList';
 
 export default () => {
-  const [lastSubheaderStuck, setLastSubheaderStuck] = useState(null);
+  const [subheadersStuck, setSubheadersStuck] = useState(new Set());
 
   const handleStuck = (subheader, isStuck) => {
-    if (lastSubheaderStuck === subheader && !isStuck) {
-      setLastSubheaderStuck(null);
-    } else if (!lastSubheaderStuck && isStuck) {
-      setLastSubheaderStuck(subheader);
-    }
+    setSubheadersStuck((state) => {
+      const newState = new Set(state);
+
+      if (isStuck) {
+        newState.add(subheader);
+      } else {
+        newState.delete(subheader);
+      }
+
+      return newState;
+    });
   };
 
   return (
@@ -24,7 +30,7 @@ export default () => {
             className={cx(
               'header',
               isStuck && 'header--stuck',
-              isStuck && !lastSubheaderStuck && 'header--has-shadow',
+              isStuck && !subheadersStuck.size && 'header--has-shadow',
             )}
           >
             Contacts

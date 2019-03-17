@@ -15,11 +15,10 @@
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "cypress:install": "cd cypress/server && yarn install",
     "cypress:prepare": "cd cypress/server && PORT=8000 yarn start",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --record --key $CYPRESS_RECORDING_KEY",
-    "cypress:ci": "yarn cypress:install && yarn cypress:prepare & wait-on http://localhost:8000 && yarn cypress:run",
+    "cypress:ci": "yarn cypress:prepare & wait-on http://localhost:8000 && yarn cypress:run",
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",

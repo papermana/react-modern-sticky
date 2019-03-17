@@ -21,6 +21,9 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
+            - v1-server-dependencies-{{ checksum "cypress/server/package.json" }}
+            - v1-server-dependencies-
+
       - run: yarn install
       - run: $(npm bin)/cypress install
 
@@ -29,6 +32,14 @@ jobs:
             - node_modules
             - /home/circleci/.cache/Cypress
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: cd cypress/server && yarn install
+
+      - save_cache:
+          paths:
+            - cypress/server/node_modules
+          key: |
+            v1-server-dependencies-{{ checksum "cypress/server/package.json" }}
 
       # Run Cypress tests
       - run: mkdir cypress-test-results

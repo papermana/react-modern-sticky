@@ -87,7 +87,7 @@ const Sticky = ({
       <div
         ref={sentinelStatic}
         className={styles.sentinel}
-        style={{ top: -actualOffset }}
+        style={{ top: -actualOffset.current }}
       />
       <div
         {...props}
@@ -100,7 +100,7 @@ const Sticky = ({
         {children instanceof Function ? children({ isStuck }) : children}
         <div
           ref={sentinelSticky}
-          style={{ top: -actualOffset }}
+          style={{ top: -actualOffset.current }}
           className={styles.sentinel}
         />
       </div>

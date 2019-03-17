@@ -50,3 +50,7 @@ jobs:
           path: cypress/videos
       - store_artifacts:
           path: cypress/screenshots
+
+      # Run linters
+      - run: yarn lint:js
+      - run: yarn lint:css

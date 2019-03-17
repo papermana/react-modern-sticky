@@ -17,7 +17,7 @@
     "test:watch": "react-scripts test --env=jsdom",
     "cypress:prepare": "cd cypress/server && PORT=8000 yarn start",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run --record --key $CYPRESS_RECORDING_KEY",
+    "cypress:run": "cross-env cypress run --record --key $CYPRESS_RECORDING_KEY",
     "cypress:ci": "yarn cypress:prepare & wait-on http://localhost:8000 && yarn cypress:run",
     "build": "rollup -c",
     "start": "rollup -c -w",

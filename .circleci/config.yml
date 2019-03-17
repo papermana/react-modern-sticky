@@ -24,6 +24,9 @@ jobs:
             - v1-server-dependencies-{{ checksum "cypress/server/package.json" }}
             - v1-server-dependencies-
 
+            - v1-example-dependencies-{{ checksum "example/package.json" }}
+            - v1-example-dependencies-
+
       - run: yarn install
       - run: $(npm bin)/cypress install
 
@@ -40,6 +43,13 @@ jobs:
             - cypress/server/node_modules
           key: |
             v1-server-dependencies-{{ checksum "cypress/server/package.json" }}
+
+      - run: cd example && yarn install
+
+      - save_cache:
+          paths:
+            - example
+          key: v1-example-dependencies-{{ checksum "example/package.json" }}
 
       # Run Cypress tests
       - run: mkdir cypress-test-results

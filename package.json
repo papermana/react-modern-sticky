@@ -19,6 +19,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cross-env cypress run --record --key $CYPRESS_RECORDING_KEY",
     "cypress:ci": "yarn cypress:prepare & wait-on http://localhost:8000 && yarn cypress:run",
+    "lint:js": "eslint \"{src,example/src,cypress/server/src}/**/*.js\"",
+    "lint:css": "stylelint \"{src,example/src,cypress/server/src}/**/*.css\"",
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "yarn run build",

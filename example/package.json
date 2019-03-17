@@ -9,8 +9,8 @@
     "intersection-observer": "^0.5.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "link:../node_modules/react",
+    "react-dom": "link:../node_modules/react-dom",
     "react-modern-sticky": "link:..",
     "react-scripts": "^1.1.4"
   },

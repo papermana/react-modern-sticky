@@ -1,20 +1,17 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
-jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: cypress/base:10
+version: 2.1
 
+executors:
+  main-executor:
+    docker:
+      - image: cypress/base:10
     working_directory: ~/repo
 
+jobs:
+  build:
+    executor: main-executor
     steps:
       - checkout
 
-      # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -51,7 +48,20 @@ jobs:
             - example
           key: v1-example-dependencies-{{ checksum "example/package.json" }}
 
-      # Run Cypress tests
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist/
+            - node_modules/
+            - example/node_modules/
+            - cypress/server/node_modules/
+
+  run-cypress:
+    executor: main-executor
+    steps:
+      - attach_workspace:
+          at: .
+
       - run: mkdir cypress-test-results
       - run: yarn cypress:ci
       - store_test_results:
@@ -61,6 +71,24 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-      # Run linters
+  run-linters:
+    executor: main-executor
+    steps:
+      - attach_workspace:
+          at: .
+
+      - checkout
+
       - run: yarn lint:js
       - run: yarn lint:css
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build
+      - run-cypress:
+          requires:
+            - build
+      - run-linters:
+          requires:
+            - build

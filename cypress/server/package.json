@@ -1,6 +1,5 @@
 {
-  "name": "react-modern-sticky-example",
-  "homepage": "https://papermana.github.io/react-modern-sticky",
+  "name": "react-modern-sticky-cypress-server",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,

@@ -23,6 +23,7 @@ jobs:
             - v1-dependencies-
 
       - run: yarn install
+      - run: $(npm bin)/cypress install
 
       - save_cache:
           paths:

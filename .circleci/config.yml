@@ -55,8 +55,17 @@ jobs:
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-repo-cypress-{{ checksum "package.json" }}
+            - v1-repo-cypress-
 
       - run: $(npm bin)/cypress install
+      - save_cache:
+          paths:
+            - ~/.cache
+            - ~/.npm
+          key: v1-repo-cypress-{{ checksum "package.json" }}
 
       - run: mkdir -p test-results/cypress
       - run: |

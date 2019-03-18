@@ -4,7 +4,7 @@ executors:
   main-executor:
     docker:
       - image: cypress/base:10
-    working_directory: ~/repo
+    working_directory: ~/react-modern-sticky
 
 jobs:
   build:
@@ -48,19 +48,17 @@ jobs:
             - example
           key: v1-example-dependencies-{{ checksum "example/package.json" }}
 
-      - persist_to_workspace:
-          root: .
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - dist/
-            - node_modules/
-            - example/node_modules/
-            - cypress/server/node_modules/
+            - ~/react-modern-sticky
 
   run-cypress:
     executor: main-executor
     steps:
-      - attach_workspace:
-          at: .
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
       - run: mkdir cypress-test-results
       - run: yarn cypress:ci
@@ -74,10 +72,9 @@ jobs:
   run-linters:
     executor: main-executor
     steps:
-      - attach_workspace:
-          at: .
-
-      - checkout
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
       - run: yarn lint:js
       - run: yarn lint:css

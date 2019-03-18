@@ -17,32 +17,32 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
+      - restore_cache:
+          keys:
             - v1-server-dependencies-{{ checksum "cypress/server/package.json" }}
             - v1-server-dependencies-
-
+      - restore_cache:
+          keys:
             - v1-example-dependencies-{{ checksum "example/package.json" }}
             - v1-example-dependencies-
-
+      - restore_cache:
+          keys:
             - v1-cypress-{{ checksum "package.json" }}
             - v1-cypress-
 
       - run: yarn install
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run: $(npm bin)/cypress install
-
       - save_cache:
           paths:
             - /home/circleci/.cache/Cypress
           key: v1-cypress-{{ checksum "package.json" }}
 
       - run: cd cypress/server && yarn install
-
       - save_cache:
           paths:
             - cypress/server/node_modules
@@ -50,24 +50,23 @@ jobs:
             v1-server-dependencies-{{ checksum "cypress/server/package.json" }}
 
       - run: cd example && yarn install
-
       - save_cache:
           paths:
             - example
           key: v1-example-dependencies-{{ checksum "example/package.json" }}
 
       - save_cache:
-          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/react-modern-sticky
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
   run-cypress:
     executor: main-executor
     steps:
       - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-            - v1-cypress-{{ checksum "package.json" }}
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          key: v1-cypress-{{ checksum "package.json" }}
 
       - run: mkdir cypress-test-results
       - run: yarn cypress:ci
@@ -82,8 +81,7 @@ jobs:
     executor: main-executor
     steps:
       - restore_cache:
-          keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
 
       - run: yarn lint:js
       - run: yarn lint:css

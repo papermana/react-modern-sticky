@@ -102,7 +102,7 @@ jobs:
 
       - run: yarn deploy
 
-      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/.npmrc
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run: npm publish
 
 workflows:

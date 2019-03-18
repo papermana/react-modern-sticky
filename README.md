@@ -130,4 +130,4 @@ Eric Bidelman, author of [this article](https://developers.google.com/web/update
 
 ## License
 
-MIT © [papermana](https://github.com/papermana)
+MIT © [Dominik Rowicki](https://github.com/papermana)

@@ -3,6 +3,7 @@
 > Lightweight sticky component for the modern web.
 
 [![NPM](https://img.shields.io/npm/v/react-modern-sticky.svg)](https://www.npmjs.com/package/react-modern-sticky)
+[![CircleCI](https://circleci.com/gh/papermana/react-modern-sticky.svg?style=svg)](https://circleci.com/gh/papermana/react-modern-sticky)
 
 Traditionally, making headers sticky was achieved by watching scroll events. This creates some performance problems. Thankfully, there is now a native way of doing this in CSS: `position: sticky;`. However, there's no way to tell when an element switches between "stuck" and "unstuck" modes.
 

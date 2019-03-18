@@ -37,6 +37,8 @@ npm install --save react-modern-sticky
 yarn add react-modern-sticky
 ```
 
+Note that `react-modern-sticky` requires at least React version 16.8.
+
 ## Usage
 
 ### Basic usage

@@ -102,6 +102,9 @@ jobs:
 
       - run: yarn deploy
 
+      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run: npm publish
+
 workflows:
   version: 2
   main:

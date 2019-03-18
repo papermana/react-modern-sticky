@@ -39,7 +39,7 @@ jobs:
       - run: $(npm bin)/cypress install
       - save_cache:
           paths:
-            - /home/circleci/.cache/Cypress
+            - /root/.cache/Cypress
           key: v1-cypress-{{ checksum "package.json" }}
 
       - run: cd cypress/server && yarn install
@@ -52,7 +52,7 @@ jobs:
       - run: cd example && yarn install
       - save_cache:
           paths:
-            - example
+            - example/node_modules
           key: v1-example-dependencies-{{ checksum "example/package.json" }}
 
       - save_cache:

@@ -5,7 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/react-modern-sticky.svg)](https://www.npmjs.com/package/react-modern-sticky)
 [![CircleCI](https://circleci.com/gh/papermana/react-modern-sticky.svg?style=svg)](https://circleci.com/gh/papermana/react-modern-sticky)
 
-Traditionally, making headers sticky was achieved by watching scroll events. This creates some performance problems. Thankfully, there is now a native way of doing this in CSS: `position: sticky;`. However, there's no way to tell when an element switches between "stuck" and "unstuck" modes.
+Traditionally, making headers sticky was achieved by watching scroll events, which creates some performance problems. Thankfully, there is now a native way of doing this in CSS: `position: sticky;`. However, there's no built-in way of telling when an element switches between "stuck" and "unstuck" modes.
 
 `react-modern-sticky` is a simple component that uses `position: sticky` and, additionally, watches for when the sticky mode changes. It does so by utilizing the `IntersectionObserver` API for maximum performance.
 
@@ -24,7 +24,7 @@ See it in action [here](https://papermana.github.io/react-modern-sticky/).
 
 At the time of writing this, [support for `position: sticky;`](https://caniuse.com/#feat=css-sticky) is fairly good.
 
-However, `IntersectionObserver` is still a somewhat recent addition and is not supported by every browser; notably, by Safari 12.
+However, `IntersectionObserver` is still a somewhat recent addition and is not supported by every browser; notably, it's unsupported on Safari 12.
 
 It is recommended to use the polyfill [`intersection-observer`](https://www.npmjs.com/package/intersection-observer) for now. It's enough to just add it to your `package.json` and then put the following somewhere in the code (like in `index.js`):
 
@@ -77,7 +77,7 @@ const Example = () => (
 
 ### Offset
 
-You can set a vertical offset for the `Sticky` element if you need it to not be stuck at the very top of the screen. A common use case for this would be if you have a fixed header, and want your sticky sub-header to appear below it.
+You can set a vertical offset for the `Sticky` element if you need it to not be stuck at the very top of the screen. A common use case for this would be if you have a fixed header and want your sticky sub-header to appear below it.
 
 You can do this simply by passing a prop:
 
@@ -89,7 +89,7 @@ const Example = () => (
 );
 ```
 
-Alternatively, if you want to keep all your styles in CSS, you can just apply the `top` property to the element. This may require the use of `!important` to override the default style for `Sticky`, depending on whether your CSS or libraries' CSS gets loaded first.
+Alternatively, if you want to keep all your styles in CSS, you can just apply the `top` property to the element. This may require the use of `!important` to override the default style for `Sticky`, depending on whether your CSS or the library's CSS gets loaded first.
 
 ```css
 .sticky {

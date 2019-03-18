@@ -77,6 +77,22 @@ jobs:
 
       - run: yarn lint:js
       - run: yarn lint:css
+
+  deploy:
+    executor: main-executor
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+
+      - add_ssh_keys:
+          fingerprints:
+            - "26:e2:76:f4:1e:0a:fd:56:e5:77:07:61:85:0f:58:95"
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run: git config --global user.email "circleci@fake-email.com"
+      - run: git config --global user.name "CircleCI Deployer"
+
+      - run: yarn deploy
+
 workflows:
   version: 2
   main:
@@ -88,3 +104,10 @@ workflows:
       - run-linters:
           requires:
             - build
+      - deploy:
+          requires:
+            - run-cypress
+            - run-linters
+          filters:
+            branches:
+              only: master

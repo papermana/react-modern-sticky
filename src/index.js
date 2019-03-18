@@ -4,6 +4,14 @@ import cx from 'classnames';
 
 import styles from './styles.css';
 
+const Sentinel = ({ offset }) => (
+  <div style={{ top: offset }} className={styles.sentinel} />
+);
+
+Sentinel.propTypes = {
+  offset: PropTypes.number.isRequired,
+};
+
 const VIEWPORT_TOP_EDGE_POSITIONS = {
   NULL: 'NULL',
   ABOVE_STICKY_CONTAINER: 'ABOVE_STICKY_CONTAINER',
@@ -84,11 +92,7 @@ const Sticky = ({
 
   return (
     <Fragment>
-      <div
-        ref={sentinelStatic}
-        className={styles.sentinel}
-        style={{ top: -actualOffset.current }}
-      />
+      <Sentinel ref={sentinelStatic} offset={-actualOffset.current} />
       <div
         {...props}
         ref={sticky}
@@ -98,11 +102,7 @@ const Sticky = ({
         })}
       >
         {children instanceof Function ? children({ isStuck }) : children}
-        <div
-          ref={sentinelSticky}
-          style={{ top: -actualOffset.current }}
-          className={styles.sentinel}
-        />
+        <Sentinel ref={sentinelSticky} offset={-actualOffset.current} />
       </div>
     </Fragment>
   );

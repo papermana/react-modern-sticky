@@ -24,14 +24,22 @@ jobs:
             - v1-example-dependencies-{{ checksum "example/package.json" }}
             - v1-example-dependencies-
 
+            - v1-cypress-{{ checksum "package.json" }}
+            - v1-cypress-
+
       - run: yarn install
-      - run: $(npm bin)/cypress install
 
       - save_cache:
           paths:
             - node_modules
-            - /home/circleci/.cache/Cypress
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: $(npm bin)/cypress install
+
+      - save_cache:
+          paths:
+            - /home/circleci/.cache/Cypress
+          key: v1-cypress-{{ checksum "package.json" }}
 
       - run: cd cypress/server && yarn install
 
@@ -59,6 +67,7 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - v1-cypress-{{ checksum "package.json" }}
 
       - run: mkdir cypress-test-results
       - run: yarn cypress:ci

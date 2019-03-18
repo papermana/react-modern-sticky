@@ -36,12 +36,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: $(npm bin)/cypress install
-      - save_cache:
-          paths:
-            - /root/.cache/Cypress
-          key: v1-cypress-{{ checksum "package.json" }}
-
       - run: cd cypress/server && yarn install
       - save_cache:
           paths:
@@ -65,8 +59,8 @@ jobs:
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - restore_cache:
-          key: v1-cypress-{{ checksum "package.json" }}
+
+      - run: $(npm bin)/cypress install
 
       - run: mkdir cypress-test-results
       - run: yarn cypress:ci

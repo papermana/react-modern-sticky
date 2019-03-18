@@ -1,12 +1,18 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import styles from './styles.css';
 
-const Sentinel = ({ offset }) => (
-  <div style={{ top: offset }} className={styles.sentinel} />
-);
+const Sentinel = forwardRef(({ offset }, ref) => (
+  <div ref={ref} style={{ top: offset }} className={styles.sentinel} />
+));
 
 Sentinel.propTypes = {
   offset: PropTypes.number.isRequired,

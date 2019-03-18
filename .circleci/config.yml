@@ -25,10 +25,6 @@ jobs:
           keys:
             - v1-example-dependencies-{{ checksum "example/package.json" }}
             - v1-example-dependencies-
-      - restore_cache:
-          keys:
-            - v1-cypress-{{ checksum "package.json" }}
-            - v1-cypress-
 
       - run: yarn install
       - save_cache:
